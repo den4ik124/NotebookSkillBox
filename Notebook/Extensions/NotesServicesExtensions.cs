@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Notebook.Application.Notes.Queries;
 using Notebook.Core.Interfaces.Repositories;
 using Notebook.Data;
 using Notebook.Data.Repositories;
@@ -18,7 +20,10 @@ namespace Notebook.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            //services.AddMediatR(typeof().Assembly);
+            var context = services.BuildServiceProvider().GetService<NotesDbContext>();
+            context.Database.Migrate();
+
+            services.AddMediatR(typeof(GetNotesQueryHandler).Assembly);
 
             return services;
         }

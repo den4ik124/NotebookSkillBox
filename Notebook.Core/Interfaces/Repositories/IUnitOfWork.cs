@@ -6,6 +6,8 @@ namespace Notebook.Core.Interfaces.Repositories
     {
         IRepository<Note<int>> NotesRepository { get; }
 
+        IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
+
         Task<bool> CompleteAsync();
     }
 }

@@ -41,5 +41,10 @@ namespace Notebook.Data.Repositories
         {
             this.context.Dispose();
         }
+
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }
