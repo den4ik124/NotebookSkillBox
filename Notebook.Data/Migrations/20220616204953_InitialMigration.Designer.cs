@@ -10,7 +10,7 @@ using Notebook.Data;
 namespace Notebook.Data.Migrations
 {
     [DbContext(typeof(NotesDbContext))]
-    [Migration("20220616194845_InitialMigration")]
+    [Migration("20220616204953_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Notebook.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Notebook.Core.Adres", b =>
+            modelBuilder.Entity("Notebook.Core.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,6 +34,9 @@ namespace Notebook.Data.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("HouseNumber")
+                        .HasColumnType("int");
+
                     b.Property<long>("Index")
                         .HasColumnType("bigint");
 
@@ -42,7 +45,10 @@ namespace Notebook.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Adres");
+                    b.HasIndex("Index")
+                        .IsUnique();
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Notebook.Core.Note", b =>
@@ -52,7 +58,7 @@ namespace Notebook.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdresId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -72,18 +78,18 @@ namespace Notebook.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdresId");
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Notebook.Core.Note", b =>
                 {
-                    b.HasOne("Notebook.Core.Adres", "Adres")
+                    b.HasOne("Notebook.Core.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AdresId");
+                        .HasForeignKey("AddressId");
 
-                    b.Navigation("Adres");
+                    b.Navigation("Address");
                 });
 #pragma warning restore 612, 618
         }

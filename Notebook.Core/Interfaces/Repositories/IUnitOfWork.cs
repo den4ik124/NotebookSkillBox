@@ -4,7 +4,7 @@ namespace Notebook.Core.Interfaces.Repositories
 {
     public interface IUnitOfWork : ITransaction
     {
-        IRepository<Note<int>> NotesRepository { get; }
+        IRepository<Note> NotesRepository { get; }
 
         IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
 

@@ -9,12 +9,12 @@ namespace Notebook.Data.Repositories
     {
         private readonly NotesDbContext context;
 
-        public IRepository<Note<int>> NotesRepository { get; private set; }
+        public IRepository<Note> NotesRepository { get; private set; }
 
         public UnitOfWork(NotesDbContext context)
         {
             this.context = context;
-            NotesRepository = new Repository<Note<int>>(this.context);
+            NotesRepository = new Repository<Note>(this.context);
         }
 
         public async Task BeginTransactionAsync()

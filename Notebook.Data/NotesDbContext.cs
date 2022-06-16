@@ -9,6 +9,13 @@ namespace Notebook.Data
         {
         }
 
-        public DbSet<Note<int>> Notes { get; set; }
+        public DbSet<Note> Notes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            //builder.Entity<Address>()
+            //    .HasIndex(note => note.Index)
+            //    .IsUnique();
+        }
     }
 }

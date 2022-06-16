@@ -8,11 +8,11 @@ namespace Notebook.Mappings
     {
         public ModelsMapper()
         {
-            CreateMap<Note<int>, NoteDto>();
-            CreateMap<NoteDto, Note<int>>();
+            CreateMap<Note, NoteDto>();
+            CreateMap<NoteDto, Note>();
 
-            CreateMap<Adres, AdresDto>();
-            CreateMap<AdresDto, Adres>();
+            CreateMap<Address, AddressDto>();
+            CreateMap<AddressDto, Address>();
         }
     }
 }

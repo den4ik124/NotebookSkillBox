@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Notebook.Application.Core;
 using Notebook.Application.DTOs;
 using Notebook.Core.Interfaces.Repositories;
@@ -22,7 +23,7 @@ namespace Notebook.Application.Notes.Queries
 
         public async Task<Result<IEnumerable<NoteDto>>> Handle(GetNotesQuery request, CancellationToken cancellationToken)
         {
-            var notes = this.unitOfWork.NotesRepository.GetQuery().Include();
+            var notes = this.unitOfWork.NotesRepository.GetQuery().Include(note => note.Address);
             var response = this.mapper.Map<IEnumerable<NoteDto>>(notes);
             return Result<IEnumerable<NoteDto>>.Success(response);
         }
