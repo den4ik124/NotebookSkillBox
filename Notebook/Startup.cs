@@ -4,7 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Notebook.Data;
 using Notebook.Extensions;
+using Notebook.Middleware;
+using System;
 
 namespace Notebook
 {
@@ -20,9 +23,6 @@ namespace Notebook
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
-
             services.AddNotesServices(Configuration);
             services.AddIdentityServices(Configuration);
 
@@ -36,7 +36,10 @@ namespace Notebook
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+                              IWebHostEnvironment env,
+                              ISeedEmployees employeeSeeder,
+                              IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -44,13 +47,18 @@ namespace Notebook
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notebook v1"));
             }
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseMiddleware<AuthTokenCheckerMiddleware>();
+
             app.UseAuthentication();
             app.UseAuthorization();
+
+            employeeSeeder.Seed(serviceProvider, Configuration);
 
             app.UseEndpoints(endpoints =>
             {

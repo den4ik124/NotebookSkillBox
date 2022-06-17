@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Notebook.Application.DTOs;
+using Notebook.Application.DTOs.Common;
 using Notebook.Application.Notes.Commands;
 using Notebook.Application.Notes.Queries;
+using Notebook.Core.Constants;
 using System.Threading.Tasks;
 
 namespace Notebook.Controllers
 {
+    [Authorize(Policy = nameof(Policies.CustomerAccess))]
     public class NotesController : BaseApiController
     {
-        // GET: api/<NotesController>
-        [HttpGet]
-        public async Task<IActionResult> GetNotes()
+        [HttpPost("notes")]
+        public async Task<IActionResult> GetNotes([FromBody] PagingFilteringDto filteringData)
         {
-            return HandleResult(await this.Mediator.Send(new GetNotesQuery()));
+            return HandleResult(await this.Mediator.Send(new GetNotesQuery() { PageParameters = filteringData.PageInfo }));
         }
 
         // GET api/<NotesController>/5
