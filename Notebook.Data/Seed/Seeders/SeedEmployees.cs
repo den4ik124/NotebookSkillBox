@@ -2,9 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notebook.Core.Constants;
+using Notebook.Data.Seed.Interfaces;
 using System;
 
-namespace Notebook.Data
+namespace Notebook.Data.Seed.Seeders
 {
     public class SeedEmployees : ISeedEmployees
     {

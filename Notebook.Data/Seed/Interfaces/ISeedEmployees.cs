@@ -1,4 +1,4 @@
-﻿namespace Notebook.Data
+﻿namespace Notebook.Data.Seed.Interfaces
 {
     public interface ISeedEmployees : ISeeder
     {

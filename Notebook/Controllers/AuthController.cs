@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notebook.Application.Auth.Commands;
-using Notebook.Application.Dto.Auth;
+using Notebook.Application.DTOs.Auth;
 using System.Threading.Tasks;
 
 namespace Notebook.Controllers

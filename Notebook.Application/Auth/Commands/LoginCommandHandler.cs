@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Notebook.Application.Core;
-using Notebook.Application.Dto.Auth;
+using Notebook.Application.DTOs.Auth;
 using Notebook.Core.AppSettings;
 using Notebook.Core.Services;
 using System;

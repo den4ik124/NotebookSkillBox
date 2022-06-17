@@ -1,4 +1,4 @@
-﻿namespace Notebook.Application.Dto.Auth
+﻿namespace Notebook.Application.DTOs.Auth
 {
     public class RoleDto
     {

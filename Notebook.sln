@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notebook.Application", "Not
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notebook.Data", "Notebook.Data\Notebook.Data.csproj", "{8163FE69-21ED-48AC-BA8E-54E2016DCCD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBook.WebApp", "NoteBook.WebApp\NoteBook.WebApp.csproj", "{924C1EDF-FC81-4F70-B7DA-48EB2F4EE199}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notebook.MVC", "Notebook.MVC\Notebook.MVC.csproj", "{4ED34F23-87C0-4B3D-A2E4-879990FA940D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{8163FE69-21ED-48AC-BA8E-54E2016DCCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8163FE69-21ED-48AC-BA8E-54E2016DCCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8163FE69-21ED-48AC-BA8E-54E2016DCCD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{924C1EDF-FC81-4F70-B7DA-48EB2F4EE199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{924C1EDF-FC81-4F70-B7DA-48EB2F4EE199}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{924C1EDF-FC81-4F70-B7DA-48EB2F4EE199}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{924C1EDF-FC81-4F70-B7DA-48EB2F4EE199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED34F23-87C0-4B3D-A2E4-879990FA940D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED34F23-87C0-4B3D-A2E4-879990FA940D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED34F23-87C0-4B3D-A2E4-879990FA940D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED34F23-87C0-4B3D-A2E4-879990FA940D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

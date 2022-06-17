@@ -9,6 +9,8 @@ using Notebook.Core.AppSettings;
 using Notebook.Core.Constants;
 using Notebook.Core.Services;
 using Notebook.Data;
+using Notebook.Data.Seed.Interfaces;
+using Notebook.Data.Seed.Seeders;
 using System.Text;
 
 namespace Notebook.Extensions

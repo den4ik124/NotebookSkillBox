@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Notebook.Application.Core;
-using Notebook.Application.Dto.Auth;
+using Notebook.Application.DTOs.Auth;
 
 namespace Notebook.Application.Auth.Commands
 {
