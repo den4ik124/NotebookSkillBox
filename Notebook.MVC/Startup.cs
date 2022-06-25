@@ -9,6 +9,7 @@ using Notebook.Application.Notes.Queries;
 using Notebook.Core.Interfaces.Repositories;
 using Notebook.Data;
 using Notebook.Data.Repositories;
+using Notebook.MVC.Extensions;
 
 namespace Notebook.MVC
 {
@@ -29,6 +30,8 @@ namespace Notebook.MVC
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("NotesDb"));
             });
+            services.AddNotesServices(Configuration);
+            services.AddIdentityServices(Configuration);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));

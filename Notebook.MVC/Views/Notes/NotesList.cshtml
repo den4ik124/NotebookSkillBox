@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Notebook.MVC.Models.NoteModel>
+﻿@using Notebook.Application.Core
+@using Notebook.Application.DTOs
+@model PagedList<NoteDto>
 
 @{
     ViewData["Title"] = "NotesList";
@@ -7,35 +9,34 @@
 
 <h1>NotesList</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Last name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThirdName)
+                Third name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                Phone number
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -56,9 +57,18 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @if (item.Address != null)
+                {
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Address.Country),
+                    </p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Address.City),
+                    </p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Address.Street)
+                    </p>
+                }
             </td>
         </tr>
 }
