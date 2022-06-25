@@ -7,7 +7,7 @@ using Notebook.Application.Notes.Queries;
 using Notebook.Core.Constants;
 using System.Threading.Tasks;
 
-namespace Notebook.Controllers
+namespace Notebook.API.Controllers
 {
     [Authorize(Policy = nameof(Policies.CustomerAccess))]
     public class NotesController : BaseApiController

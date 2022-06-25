@@ -4,12 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Notebook.API.Extensions;
+using Notebook.API.Middleware;
 using Notebook.Data.Seed.Interfaces;
-using Notebook.Extensions;
-using Notebook.Middleware;
 using System;
 
-namespace Notebook
+namespace Notebook.API
 {
     public class Startup
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Notebook.Application.Core;
 
-namespace Notebook.Controllers
+namespace Notebook.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

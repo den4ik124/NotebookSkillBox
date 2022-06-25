@@ -4,7 +4,7 @@ using Notebook.Core.Constants;
 using System;
 using System.Threading.Tasks;
 
-namespace Notebook.Middleware
+namespace Notebook.API.Middleware
 {
     public class AuthTokenCheckerMiddleware
     {

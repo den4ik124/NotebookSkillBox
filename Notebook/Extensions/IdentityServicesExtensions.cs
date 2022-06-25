@@ -13,7 +13,7 @@ using Notebook.Data.Seed.Interfaces;
 using Notebook.Data.Seed.Seeders;
 using System.Text;
 
-namespace Notebook.Extensions
+namespace Notebook.API.Extensions
 {
     public static class IdentityServicesExtensions
     {

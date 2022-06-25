@@ -2,7 +2,7 @@
 using Notebook.Application.DTOs;
 using Notebook.Core;
 
-namespace Notebook.Mappings
+namespace Notebook.API.Mappings
 {
     public class ModelsMapper : Profile
     {

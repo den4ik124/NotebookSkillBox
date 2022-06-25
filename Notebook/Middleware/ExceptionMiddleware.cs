@@ -8,7 +8,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Notebook.Middleware
+namespace Notebook.API.Middleware
 {
     public class ExceptionMiddleware
     {

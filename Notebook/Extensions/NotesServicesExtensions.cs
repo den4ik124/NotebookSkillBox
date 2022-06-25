@@ -7,7 +7,7 @@ using Notebook.Core.Interfaces.Repositories;
 using Notebook.Data;
 using Notebook.Data.Repositories;
 
-namespace Notebook.Extensions
+namespace Notebook.API.Extensions
 {
     public static class NotesServicesExtensions
     {
