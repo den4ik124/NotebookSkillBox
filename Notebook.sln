@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notebook.API", "Notebook\Notebook.API.csproj", "{B461A64C-D6AE-427B-9046-F8DE2156289D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notebook.API", "Notebook.API\Notebook.API.csproj", "{B461A64C-D6AE-427B-9046-F8DE2156289D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notebook.Core", "Notebook.Core\Notebook.Core.csproj", "{E3F1B728-ECC2-4055-9AC2-F85283FB8A1E}"
 EndProject
