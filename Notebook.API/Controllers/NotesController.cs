@@ -26,7 +26,7 @@ namespace Notebook.API.Controllers
         }
 
         // POST api/<NotesController>
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateNewNote(NoteDto newNoteData)
         {
             return HandleResult(await this.Mediator.Send(new CreateNoteCommand() { NoteDto = newNoteData }));
@@ -39,9 +39,14 @@ namespace Notebook.API.Controllers
         }
 
         // DELETE api/<NotesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize(Policy = nameof(Policies.ManagerAccess))]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            return HandleResult(await Mediator.Send(new DeleteNoteCommand()
+            {
+                NoteId = id
+            }));
         }
     }
 }
