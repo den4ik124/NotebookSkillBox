@@ -22,7 +22,6 @@ namespace Notebook.MVC
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -40,23 +39,8 @@ namespace Notebook.MVC
             context.Database.Migrate();
 
             services.AddMediatR(typeof(GetNotesQueryHandler).Assembly);
-
-            //services.AddIdentityCore<IdentityUser>(opt =>
-            //{
-            //    opt.Password.RequireDigit = true;
-            //    opt.Password.RequiredLength = 6;
-            //    opt.Password.RequireNonAlphanumeric = false;
-            //    opt.Password.RequireUppercase = false;
-            //    opt.Password.RequireLowercase = false;
-            //})
-            //    .AddRoles<IdentityRole>()
-            //    .AddRoleManager<RoleManager<IdentityRole>>()
-            //    .AddEntityFrameworkStores<UserDbContext>()
-            //    .AddSignInManager<SignInManager<IdentityUser>>()
-            //    .AddErrorDescriber<IdentityErrorDescriber>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -66,7 +50,6 @@ namespace Notebook.MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
