@@ -20,28 +20,37 @@ namespace Notebook.API.Controllers
 
         // GET api/<NotesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetNoteById(int id)
         {
-            return "value";
+            return HandleResult(await Mediator.Send(new GetNoteByIdQuery()
+            {
+                NoteId = id
+            }));
         }
 
-        // POST api/<NotesController>
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateNewNote(NoteDto newNoteData)
         {
             return HandleResult(await this.Mediator.Send(new CreateNoteCommand() { NoteDto = newNoteData }));
         }
 
-        // PUT api/<NotesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("edit")]
+        public async Task<IActionResult> EditNote(NoteDto editedNote)
         {
+            return HandleResult(await Mediator.Send(new EditNoteCommand()
+            {
+                EditedNote = editedNote
+            }));
         }
 
-        // DELETE api/<NotesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize(Policy = nameof(Policies.ManagerAccess))]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteNote(int id)
         {
+            return HandleResult(await Mediator.Send(new DeleteNoteCommand()
+            {
+                NoteId = id
+            }));
         }
     }
 }
