@@ -20,9 +20,12 @@ namespace Notebook.API.Controllers
 
         // GET api/<NotesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetNoteById(int id)
         {
-            return "value";
+            return HandleResult(await Mediator.Send(new GetNoteByIdQuery()
+            {
+                NoteId = id
+            }));
         }
 
         [HttpPost("create")]
