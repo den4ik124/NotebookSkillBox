@@ -13,9 +13,6 @@ namespace Notebook.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<Address>()
-            //    .HasIndex(note => note.Index)
-            //    .IsUnique();
         }
     }
 }

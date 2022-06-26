@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Notebook.Core.Interfaces.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> : IBaseRepository where TEntity : class
     {
         Task<IEnumerable<TEntity>> GetAll();
 

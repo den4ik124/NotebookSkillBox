@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Notebook.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly NotesDbContext context;
         protected readonly DbSet<TEntity> dbSet;
 
-        public Repository(NotesDbContext context)
+        public GenericRepository(NotesDbContext context)
         {
             this.context = context;
             this.dbSet = this.context.Set<TEntity>();
