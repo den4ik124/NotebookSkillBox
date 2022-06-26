@@ -1,6 +1,6 @@
-﻿using Notebook.Core;
-using Notebook.Core.Interfaces.Repositories;
+﻿using Notebook.Core.Interfaces.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Notebook.Data.Repositories
@@ -8,13 +8,12 @@ namespace Notebook.Data.Repositories
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly NotesDbContext context;
-
-        public IRepository<Note> NotesRepository { get; private set; }
+        private Dictionary<Type, IBaseRepository> reposiroties;
 
         public UnitOfWork(NotesDbContext context)
         {
             this.context = context;
-            NotesRepository = new Repository<Note>(this.context);
+            this.reposiroties = new Dictionary<Type, IBaseRepository>();
         }
 
         public async Task BeginTransactionAsync()
@@ -42,9 +41,16 @@ namespace Notebook.Data.Repositories
             this.context.Dispose();
         }
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        public IGenericRepository<TEntity> GetGenericRepository<TEntity>() where TEntity : class
         {
-            throw new NotImplementedException();
+            if (this.reposiroties.ContainsKey(typeof(TEntity)))
+            {
+                return this.reposiroties[typeof(TEntity)] as GenericRepository<TEntity>;
+            }
+
+            var repo = new GenericRepository<TEntity>(this.context);
+            this.reposiroties.Add(typeof(TEntity), repo);
+            return repo;
         }
     }
 }

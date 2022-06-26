@@ -27,9 +27,6 @@ namespace Notebook.MVC.Controllers
                 },
             };
 
-            //var mediatorResult = await this.Mediator.Send(new GetNotesQuery() { PageParameters = filteringData.PageInfo });
-            //mediatorResult.Value.Items = this.mapper.Map<IEnumerable<NoteDto>>(mediatorResult.Value.Items);
-            //var result = HandleResult(mediatorResult);
             var result = await this.Mediator.Send(new GetNotesQuery() { PageParameters = filteringData.PageInfo });
 
             if (result.IsSuccess)

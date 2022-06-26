@@ -22,7 +22,7 @@ namespace Notebook.Application.Notes.Commands
         public async Task<Result<string>> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
         {
             var noteModel = this.mapper.Map<Note>(request.NoteDto);
-            if (await this.unitOfWork.NotesRepository.Add(noteModel))
+            if (await this.unitOfWork.GetGenericRepository<Note>().Add(noteModel))
             {
                 await this.unitOfWork.CompleteAsync();
                 return Result<string>.Success("Creation succeeded.");

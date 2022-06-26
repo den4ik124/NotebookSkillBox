@@ -27,10 +27,10 @@ namespace Notebook.Application.Notes.Queries
 
         public async Task<Result<PagedList<NoteDto>>> Handle(GetNotesQuery request, CancellationToken cancellationToken)
         {
-            var notes = GetItemsFromQuery(request);// this.unitOfWork.NotesRepository.GetQuery().Include(note => note.Address).Skip(offset).Take(request.PageParameters.Size);
+            var notes = GetItemsFromQuery(request);
             var response = this.mapper.Map<IEnumerable<NoteDto>>(notes);
 
-            request.PageParameters.Items = await this.unitOfWork.NotesRepository.GetItemsCount();
+            request.PageParameters.Items = await this.unitOfWork.GetGenericRepository<Note>().GetItemsCount();
 
             return Result<PagedList<NoteDto>>.Success(new PagedList<NoteDto>(response, request.PageParameters));
         }
@@ -40,17 +40,18 @@ namespace Notebook.Application.Notes.Queries
                                                     Func<IQueryable<Note>, IOrderedQueryable<Note>> orderBy = null)
         {
             var offset = (request.PageParameters.Page - 1) * request.PageParameters.Size;
+            var repo = this.unitOfWork.GetGenericRepository<Note>();
             if (predicate != null)
             {
-                return this.unitOfWork.NotesRepository.GetQuery(predicate, orderBy)
-                                                      .Include(note => note.Address)
-                                                      .Skip(offset)
-                                                      .Take(request.PageParameters.Size);
+                return repo.GetQuery(predicate, orderBy)
+                           .Include(note => note.Address)
+                           .Skip(offset)
+                           .Take(request.PageParameters.Size);
             }
-            return this.unitOfWork.NotesRepository.GetQuery(null, orderBy)
-                                                  .Include(note => note.Address)
-                                                  .Skip(offset)
-                                                  .Take(request.PageParameters.Size);
+            return repo.GetQuery(null, orderBy)
+                       .Include(note => note.Address)
+                       .Skip(offset)
+                       .Take(request.PageParameters.Size);
         }
     }
 }
