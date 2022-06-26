@@ -33,7 +33,6 @@ namespace Notebook.Application.Notes.Queries
             request.PageParameters.Items = await this.unitOfWork.GetGenericRepository<Note>().GetItemsCount();
 
             return Result<PagedList<NoteDto>>.Success(new PagedList<NoteDto>(response, request.PageParameters));
-            //one more test line
         }
 
         private IEnumerable<Note> GetItemsFromQuery(GetNotesQuery request,
