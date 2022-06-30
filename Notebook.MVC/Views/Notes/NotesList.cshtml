@@ -3,7 +3,7 @@
 @model PagedList<NoteDto>
 
 @{
-    ViewData["Title"] = "NotesList";
+    ViewData["Title"] = "Notes list";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,7 +12,7 @@
 @*<p>
     <a asp-action="Create">Create New</a>
 </p>*@
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -33,13 +33,16 @@
             <th>
                 Description
             </th>
+            <th>
+                Address
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Items) {
-        <tr>
+        <tr onclick="location.href = '@(Url.Action("NoteData", "Notes", new { id = item.Id}))'">
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -70,7 +73,55 @@
                     </p>
                 }
             </td>
+             <td>
+                 @*@Html.ActionLink("Edit", "EditNote", null, new { id = item.Id})*@
+                 @Html.ActionLink("Edit", "EditNote", null, new { noteId = item.Id})
+                 @Html.ActionLink("Delete", "DeleteNote", null, new { id = item.Id})
+              
+            </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div>
+    <ul class="pagination">
+        @if(Model.PageInfo.Page <= 1 )
+        {
+            <a class="btn btn-primary disabled">
+                &#171;
+            </a>
+        }
+        else
+        {
+            <a asp-page="/Views/Notes/NotesList"
+                asp-route-currentpage="@(Model.PageInfo.Page - 1)"
+                class="btn btn-primary">	
+                    &#171;
+            </a>
+        }
+
+        @for (var i = 1; i <= Math.Ceiling(Decimal.Divide((decimal)Model.PageInfo.Items,(decimal)Model.PageInfo.Size)); i++)
+        {
+            <li class="page-item ">
+                <a asp-page="/Views/Notes/NotesList" asp-route-currentpage="@i" class="page-link">@i</a>
+            </li>
+        }
+        @if(Model.PageInfo.Page >= Math.Ceiling(Decimal.Divide((decimal)Model.PageInfo.Items, (decimal)Model.PageInfo.Size)))
+        {
+            <a class="btn btn-primary disabled">
+                &#187;
+            </a>
+        }
+        else
+        {
+             <a  asp-page="/Views/Notes/NotesList"
+                asp-route-currentpage="@(Model.PageInfo.Page + 1)"
+                class="btn btn-primary">
+                &#187;
+            </a>
+        }
+
+        
+    </ul>
+</div>

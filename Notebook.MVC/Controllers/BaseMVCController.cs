@@ -15,11 +15,11 @@ namespace Notebook.MVC.Controllers
         {
             if (result.IsSuccess && result.Value != null)
             {
-                return Ok(result.Value);
+                return View(result.Value);
             }
             if (result.IsSuccess && result.Value == null)
             {
-                return NotFound();
+                return Redirect("/");
             }
             return BadRequest(result.Error);
         }
