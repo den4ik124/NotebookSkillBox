@@ -111,7 +111,6 @@ namespace Notebook.Tests.HandlersTests
             changedNote.FirstName.ShouldBe(checkString);
             changedNote.LastName.ShouldBe(checkString);
             changedNote.ThirdName.ShouldBe(checkString);
-            //itemsCountAter.ShouldBe(itemsCountBefore - 1);
         }
     }
 }
