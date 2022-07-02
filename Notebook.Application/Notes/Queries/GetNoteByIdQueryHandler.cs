@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Notebook.Application.Core;
 using Notebook.Application.DTOs;
 using Notebook.Core;
@@ -23,7 +24,10 @@ namespace Notebook.Application.Notes.Queries
 
         public async Task<Result<NoteDto>> Handle(GetNoteByIdQuery request, CancellationToken cancellationToken)
         {
-            var noteFromDb = this.unitOfWork.GetGenericRepository<Note>().GetQuery(note => note.Id == request.NoteId).FirstOrDefault();
+            var noteFromDb = this.unitOfWork.GetGenericRepository<Note>()
+                                            .GetQuery(note => note.Id == request.NoteId)
+                                            .Include(note => note.Address)
+                                            .FirstOrDefault();
             if (noteFromDb == null)
             {
                 return Result<NoteDto>.Failure($"Such note (ID : {request.NoteId}) does not exist");

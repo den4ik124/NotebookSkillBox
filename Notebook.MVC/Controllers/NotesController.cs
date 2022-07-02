@@ -36,6 +36,24 @@ namespace Notebook.MVC.Controllers
             }));
         }
 
+        public IActionResult CreateNoteView()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> CreateNoteAction(NoteDto newNote)
+        {
+            var result = await Mediator.Send(new CreateNoteCommand()
+            {
+                NoteDto = newNote
+            });
+            if (result.IsSuccess)
+            {
+                return RedirectToAction(nameof(this.NotesList));
+            }
+            return View(result.Error);
+        }
+
         public async Task<IActionResult> DeleteNote(int id)
         {
             var result = await Mediator.Send(new DeleteNoteCommand()

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Notebook.Application.Core
 {
@@ -11,5 +12,7 @@ namespace Notebook.Application.Core
 
         [Required]
         public int Size { get; set; } = 10;
+
+        public int TotalPagesCount { get => (int)Math.Ceiling(decimal.Divide(this.Items, this.Size)); }
     }
 }

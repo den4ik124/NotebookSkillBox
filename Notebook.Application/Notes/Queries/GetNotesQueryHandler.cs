@@ -18,11 +18,13 @@ namespace Notebook.Application.Notes.Queries
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IGenericRepository<Note> noteRepository;
 
         public GetNotesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.noteRepository = unitOfWork.GetGenericRepository<Note>();
         }
 
         public async Task<Result<PagedList<NoteDto>>> Handle(GetNotesQuery request, CancellationToken cancellationToken)
@@ -30,8 +32,7 @@ namespace Notebook.Application.Notes.Queries
             var notes = GetItemsFromQuery(request);
             var response = this.mapper.Map<IEnumerable<NoteDto>>(notes);
 
-            request.PageParameters.Items = await this.unitOfWork.GetGenericRepository<Note>().GetItemsCount();
-
+            request.PageParameters.Items = await this.noteRepository.GetItemsCount();
             return Result<PagedList<NoteDto>>.Success(new PagedList<NoteDto>(response, request.PageParameters));
         }
 
@@ -40,15 +41,14 @@ namespace Notebook.Application.Notes.Queries
                                                     Func<IQueryable<Note>, IOrderedQueryable<Note>> orderBy = null)
         {
             var offset = (request.PageParameters.Page - 1) * request.PageParameters.Size;
-            var repo = this.unitOfWork.GetGenericRepository<Note>();
             if (predicate != null)
             {
-                return repo.GetQuery(predicate, orderBy)
+                return this.noteRepository.GetQuery(predicate, orderBy)
                            .Include(note => note.Address)
                            .Skip(offset)
                            .Take(request.PageParameters.Size);
             }
-            return repo.GetQuery(null, orderBy)
+            return this.noteRepository.GetQuery(null, orderBy)
                        .Include(note => note.Address)
                        .Skip(offset)
                        .Take(request.PageParameters.Size);
