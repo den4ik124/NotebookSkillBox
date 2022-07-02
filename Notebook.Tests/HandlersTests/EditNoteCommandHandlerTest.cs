@@ -1,17 +1,24 @@
-﻿using Moq;
+using Moq;
+using Notebook.Application.DTOs;
+using Notebook.Application.Notes.Commands;
 using Notebook.Core;
-using Notebook.Core.Interfaces.Repositories;
-using System;
+using Shouldly;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Threading;
+using Xunit;
 
-namespace Notebook.Tests.Mocks
+namespace Notebook.Tests.HandlersTests
 {
-    public static class MockRepository
+    public class EditNoteCommandHandlerTest : NotesBaseTest
     {
-        public static Mock<IGenericRepository<Note>> GetMockedNoteRepository()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public async void EditNoteCommandHandler_ShouldUpdate_NoteData(int noteId)
         {
+            var genRepoMock = Mocks.MockRepository.GetMockedNoteRepository();
             var items = new List<Note>()
             {
                 new Note()
@@ -69,51 +76,41 @@ namespace Notebook.Tests.Mocks
                     }
                 },
             };
-            return RepositoryCreation(items);
-        }
 
-        private static Mock<IGenericRepository<T>> RepositoryCreation<T>(ICollection<T> items) where T : class
-        {
-            var mockRepo = new Mock<IGenericRepository<T>>();
-            mockRepo.Setup(rep => rep.GetAll()).ReturnsAsync(items);
-
-            mockRepo.Setup(rep => rep.Add(It.IsAny<T>())).ReturnsAsync((T item) =>
+            genRepoMock.Setup(rep => rep.Update(It.IsAny<Note>())).Returns((Note updatedItem) =>
             {
-                items.Add(item);
+                var item = items.FirstOrDefault(i => i.Id == noteId);
+                item = updatedItem;
                 return true;
             });
+            UnitOfWorkMock.Setup(x => x.GetGenericRepository<Note>()).Returns(genRepoMock.Object);
+            var editedNote = (await genRepoMock.Object.GetWhere(x => x.Id == noteId)).FirstOrDefault();
+            var checkString = "changed property";
 
-            mockRepo.Setup(rep => rep.Delete(It.IsAny<T>())).Returns((T item) =>
+            var editedNoteDto = new NoteDto();
+            Mapper.Map(editedNote, editedNoteDto);
+
+            editedNoteDto.FirstName = checkString;
+            editedNoteDto.LastName = checkString;
+            editedNoteDto.ThirdName = checkString;
+
+            //Arrange
+            var handler = new EditNoteCommandHandler(UnitOfWorkMock.Object, Mapper);
+
+            var request = new EditNoteCommand()
             {
-                items.Remove(item);
-                return true;
-            });
+                EditedNote = editedNoteDto,
+            };
 
-            mockRepo.Setup(rep => rep.GetWhere(It.IsAny<Expression<Func<T, bool>>>())).ReturnsAsync((Expression<Func<T, bool>> predicate) =>
-            {
-                return items.AsQueryable().Where(predicate).ToList();
-            });
+            //Act
+            var result = await handler.Handle(request, CancellationToken.None);
+            var changedNote = (await genRepoMock.Object.GetWhere(x => x.Id == noteId)).FirstOrDefault();
 
-            mockRepo.Setup(rep => rep.GetItemsCount(It.IsAny<Expression<Func<T, bool>>>())).ReturnsAsync((Expression<Func<T, bool>> predicate) =>
-            {
-                if (predicate != null)
-                {
-                    return items.AsQueryable().Where(predicate).Count();
-                }
-                return items.Count;
-            });
-
-            mockRepo.Setup(rep => rep.GetQuery(It.IsAny<Expression<Func<T, bool>>>(), It.IsAny<Func<IQueryable<T>, IOrderedQueryable<T>>>()))
-                .Returns((Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy) =>
-                {
-                    if (predicate != null)
-                    {
-                        return items.AsQueryable().Where(predicate);
-                    }
-                    return items.AsQueryable();
-                });
-
-            return mockRepo;
+            //Assert
+            result.IsSuccess.ShouldBeTrue();
+            changedNote.FirstName.ShouldBe(checkString);
+            changedNote.LastName.ShouldBe(checkString);
+            changedNote.ThirdName.ShouldBe(checkString);
         }
     }
 }
