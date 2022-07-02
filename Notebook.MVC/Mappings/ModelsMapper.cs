@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Notebook.Application.DTOs;
 using Notebook.Core;
-using Notebook.MVC.Models;
 
 namespace Notebook.MVC.Mappings
 {
@@ -9,9 +8,6 @@ namespace Notebook.MVC.Mappings
     {
         public ModelsMapper()
         {
-            CreateMap<NoteModel, NoteDto>();
-            CreateMap<NoteDto, NoteModel>();
-
             CreateMap<Note, NoteDto>();
             CreateMap<NoteDto, Note>();
 
