@@ -15,6 +15,7 @@ namespace Notebook.Tests
             });
             Mapper = mapperConfig.CreateMapper();
             UnitOfWorkMock = new Mock<IUnitOfWork>();
+            UnitOfWorkMock.Setup(x => x.CompleteAsync()).ReturnsAsync(true);
         }
 
         public IMapper Mapper { get; private set; }

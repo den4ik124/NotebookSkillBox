@@ -18,7 +18,6 @@ namespace Notebook.API.Controllers
             return HandleResult(await this.Mediator.Send(new GetNotesQuery() { PageParameters = filteringData.PageInfo }));
         }
 
-        // GET api/<NotesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNoteById(int id)
         {
